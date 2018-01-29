@@ -25,27 +25,33 @@ namespace SiteMap
         CreatorTreeURL treeCreator;
         Strings strClass;
 
-        private void UpdateTree()
+        private void UpdateTree(int updateMethod)
         {
-            string[] lines = textBox1.Text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            string[] lines2 = Strings.CutStringList(lines, @"://");
-            lines2 = Strings.CutStringList(lines2, @"www.");
-            //string head = Strings.SplitFirst(lines[0], '.', true);//первая часть URL без адреса страницы
+            if(updateMethod==0)
+            {
+                string[] lines = textBox1.Text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] lines2 = Strings.CutStringList(lines, @"://");
+                lines2 = Strings.CutStringList(lines2, @"www.");
+                //string head = Strings.SplitFirst(lines[0], '.', true);//первая часть URL без адреса страницы
 
-            string main = Strings.SplitFirst(lines2[0], '/', false);//главная страница сайта
-            Constants con = new Constants(main);
+                string main = Strings.SplitFirst(lines2[0], '/', false);//главная страница сайта
+                Constants con = new Constants(main);
 
-            int method = comboBox1.SelectedIndex;//как записывать узлы дерева(полный урл и только подкатегория)
-            //treeView1.
-            string head = comboBox2.Text;
-            treeCreator = new CreatorTreeURL(lines2, head, main, method);
-            strClass = new Strings(con);
+                int method = comboBox1.SelectedIndex;//как записывать узлы дерева(полный урл и только подкатегория)
+                                                     //treeView1.
+                string head = comboBox2.Text;
+                strClass = new Strings(con);
+                treeCreator = new CreatorTreeURL(lines2, head, main, method);
+            }
+            
+            
+            
         }
         
 
         public string Main()
         {
-            UpdateTree();
+            UpdateTree(0);
             string content = strClass.CreateOPML(treeCreator.TreeURL.ToOPML());
             return content;
         }
@@ -111,7 +117,7 @@ namespace SiteMap
 
         private void button2_Click(object sender, EventArgs e)
         {
-            UpdateTree();
+            UpdateTree(0);
             treeView1.Nodes.Clear();
             treeView1.Nodes.Add(treeCreator.TreeURL.ToTreeNode());
         }
@@ -216,7 +222,8 @@ namespace SiteMap
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 label4.Text = openFileDialog1.FileName;
-                textBox1.Text = File.ReadAllText(openFileDialog1.FileName);
+                OpmlReader.Load(openFileDialog1.FileName);
+                textBox1.Text = OpmlReader.Source;
             }
         }
     }
