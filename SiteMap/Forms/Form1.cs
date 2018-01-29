@@ -41,18 +41,7 @@ namespace SiteMap
             treeCreator = new CreatorTreeURL(lines2, head, main, method);
             strClass = new Strings(con);
         }
-        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            openDialog.Filter = "txt files (*.txt)|*.txt";// "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            openDialog.InitialDirectory = Directory.GetCurrentDirectory();
-            openDialog.Title = "Открыть файл";
-            if (openDialog.ShowDialog() == DialogResult.OK)
-            {
-                label1.Text = openDialog.FileName;
-                textBox1.Text = File.ReadAllText(openDialog.FileName);
-            }
-
-        }
+        
 
         public string Main()
         {
@@ -205,6 +194,30 @@ namespace SiteMap
             // call the ContainsNode method recursively using the parent of 
             // the second node.
             return ContainsNode(node1, node2.Parent);
+        }
+        //ы
+        private void txtToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+           
+            openDialog.Filter = "txt files (*.txt)|*.txt";// "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openDialog.InitialDirectory = Directory.GetCurrentDirectory();
+            openDialog.Title = "Открыть файл";
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                label4.Text = openDialog.FileName;
+                textBox1.Text = File.ReadAllText(openDialog.FileName);
+            }
+
+        
+        }
+
+        private void oPMLToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                label4.Text = openFileDialog1.FileName;
+                textBox1.Text = File.ReadAllText(openFileDialog1.FileName);
+            }
         }
     }
 }

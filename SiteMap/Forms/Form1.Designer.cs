@@ -31,11 +31,12 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.oPMLToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьКакToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -46,6 +47,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -78,10 +81,26 @@
             // 
             // открытьToolStripMenuItem
             // 
+            this.открытьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.txtToolStripMenuItem1,
+            this.oPMLToolStripMenuItem1});
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
             this.открытьToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.открытьToolStripMenuItem.Text = "Открыть";
-            this.открытьToolStripMenuItem.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
+            // 
+            // txtToolStripMenuItem1
+            // 
+            this.txtToolStripMenuItem1.Name = "txtToolStripMenuItem1";
+            this.txtToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.txtToolStripMenuItem1.Text = "*.txt";
+            this.txtToolStripMenuItem1.Click += new System.EventHandler(this.txtToolStripMenuItem1_Click);
+            // 
+            // oPMLToolStripMenuItem1
+            // 
+            this.oPMLToolStripMenuItem1.Name = "oPMLToolStripMenuItem1";
+            this.oPMLToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.oPMLToolStripMenuItem1.Text = "*.opml";
+            this.oPMLToolStripMenuItem1.Click += new System.EventHandler(this.oPMLToolStripMenuItem1_Click);
             // 
             // сохранитьКакToolStripMenuItem
             // 
@@ -118,16 +137,6 @@
             this.textBox1.Size = new System.Drawing.Size(406, 269);
             this.textBox1.TabIndex = 1;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 21);
-            this.label1.TabIndex = 3;
-            // 
             // treeView1
             // 
             this.treeView1.AllowDrop = true;
@@ -156,6 +165,7 @@
             this.tableLayoutPanel1.Controls.Add(this.treeView1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 2);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 32);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -201,7 +211,6 @@
             this.comboBox1.Size = new System.Drawing.Size(196, 25);
             this.comboBox1.TabIndex = 8;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            this.comboBox1.SelectedIndex = 0;
             // 
             // comboBox2
             // 
@@ -222,7 +231,6 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(198, 25);
             this.comboBox2.TabIndex = 9;
-            this.comboBox2.SelectedIndex = 0;
             // 
             // label2
             // 
@@ -283,13 +291,30 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(3, 340);
+            this.label4.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(210, 21);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Путь к открытому файлу";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "\"txt files (*.opml)|*.opml";
+            this.openFileDialog1.InitialDirectory = "Directory.GetCurrentDirectory()";
+            this.openFileDialog1.Title = "Открыть *.opml файл";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(919, 441);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -314,7 +339,6 @@
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem сохранитьКакToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem txtToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem opmlToolStripMenuItem;
@@ -328,6 +352,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.ToolStripMenuItem oPMLToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem txtToolStripMenuItem1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label label4;
     }
 }
 
