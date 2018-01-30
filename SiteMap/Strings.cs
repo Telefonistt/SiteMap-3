@@ -58,7 +58,8 @@ namespace SiteMap
                 temp.Append(str[i]);
                 i++;
             }
-            while (str[i] != ch);
+            while (i < str.Length&&str[i] != ch);
+            if (i >= str.Length) return temp.ToString();
             if(b==true)
             {
                 temp.Append(str[i]);

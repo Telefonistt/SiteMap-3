@@ -31,18 +31,27 @@ namespace SiteMap
             if(updateMethod==0)
             {
                 string[] lines = textBox1.Text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                string[] lines2 = Strings.CutStringList(lines, @"://");
-                lines2 = Strings.CutStringList(lines2, @"www.");
-                //string head = Strings.SplitFirst(lines[0], '.', true);//первая часть URL без адреса страницы
+                if (lines.Length==0) return;
+                
+                    string[] lines2 = Strings.CutStringList(lines, @"://");
+                    if (lines2.Length == 0) return;
+                    lines2 = Strings.CutStringList(lines2, @"www.");
+                    if (lines2.Length==0) return;
+                    
+                        //string head = Strings.SplitFirst(lines[0], '.', true);//первая часть URL без адреса страницы
 
-                string main = Strings.SplitFirst(lines2[0], '/', false);//главная страница сайта
-                Constants con = new Constants(main);
+                        string main = Strings.SplitFirst(lines2[0], '/', false);//главная страница сайта
+                        Constants con = new Constants(main);
 
-                int method = comboBox1.SelectedIndex;//как записывать узлы дерева(полный урл и только подкатегория)
-                                                     //treeView1.
-                string head = comboBox2.Text;
-                strClass = new Strings(con);
-                treeCreator = new CreatorTreeURL(lines2, head, main, method);
+                        int method = comboBox1.SelectedIndex;//как записывать узлы дерева(полный урл и только подкатегория)
+                                                             //treeView1.
+                        string head = comboBox2.Text;
+                        strClass = new Strings(con);
+                        treeCreator = new CreatorTreeURL(lines2, head, main, method);
+                    
+                    
+                
+               
             }
             
             
@@ -120,6 +129,7 @@ namespace SiteMap
         {
             UpdateTree(0);
             treeView1.Nodes.Clear();
+            if(treeCreator!=null)
             treeView1.Nodes.Add(treeCreator.TreeURL.ToTreeNode());
         }
 

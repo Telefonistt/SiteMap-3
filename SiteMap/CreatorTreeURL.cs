@@ -64,8 +64,13 @@ namespace SiteMap
             this.urls = urls;
             this.head = head;
             this.main = main;
-            TreeURL = new Tree<string>(head+main);
-            for(int i=0;i<urls.Length;i++)
+            if(method==0)
+            {
+                TreeURL = new Tree<string>(/*head+*/main);
+            }
+            else TreeURL = new Tree<string>(head+main);
+
+            for (int i=0;i<urls.Length;i++)
             {
                 AddToTree(urls[i]);
             }
