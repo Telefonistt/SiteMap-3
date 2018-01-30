@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml;
 
 namespace SiteMap
 {
@@ -217,13 +218,111 @@ namespace SiteMap
         
         }
 
+        //открыть opml файл
         private void oPMLToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 label4.Text = openFileDialog1.FileName;
-                OpmlReader.Load(openFileDialog1.FileName);
-                textBox1.Text = OpmlReader.Source;
+                string path= openFileDialog1.FileName;
+                //OpmlReader.Load(openFileDialog1.FileName);
+                //textBox1.Text = OpmlReader.Source;
+                XmlDocument doc = new XmlDocument();
+                doc.Load(path);
+                LoadTreeFromXmlDocument(doc);
+            }
+        }
+
+
+
+
+
+
+
+        private void LoadTreeFromXmlDocument(XmlDocument dom)
+        {
+            try
+            {
+                // SECTION 2. Initialize the TreeView control.
+                treeView1.Nodes.Clear();
+                TreeNodeCollection currentNodeCollect = treeView1.Nodes;
+                // SECTION 3. Populate the TreeView with the DOM nodes.
+                foreach (XmlNode node in dom.DocumentElement.ChildNodes)
+                {
+                    if (node.Name == "head")
+                    {
+                        foreach(XmlNode nodeHead in node.ChildNodes)
+                        {
+                            if(nodeHead.Name=="title")
+                            {
+                                currentNodeCollect.Add(nodeHead.InnerText);
+                                currentNodeCollect = currentNodeCollect[0].Nodes;
+                                break;
+                            }
+                        } 
+                    }
+                    if (node.Name == "body" )
+                    {
+                        foreach (XmlNode nodeInBody in node.ChildNodes)
+                        {
+                            if (nodeInBody.Name == "outline")
+                            {
+                                AddNode(currentNodeCollect, nodeInBody);
+
+                            }
+                            else continue;
+                        }
+                        break;
+                    }
+                   
+                    
+                        //&& node.ChildNodes.Count == 0)//&& node.ChildNodes.Count == 1 && string.IsNullOrEmpty(GetAttributeText(node, "text")))
+                        
+                    
+                }
+
+                treeView1.ExpandAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        static string GetAttributeText(XmlNode inXmlNode, string name)
+        {
+            XmlAttribute attr = (inXmlNode.Attributes == null ? null : inXmlNode.Attributes[name]);
+            return attr == null ? null : attr.Value;
+        }
+
+        private void AddNode(TreeNodeCollection nodes, XmlNode inXmlNode)
+        {
+            if (inXmlNode.HasChildNodes)
+            {
+                string text = GetAttributeText(inXmlNode, "text");
+                if (string.IsNullOrEmpty(text))
+                    text = ""; //inXmlNode.Name;
+                TreeNode newNode = nodes.Add(text);
+                XmlNodeList nodeList = inXmlNode.ChildNodes;
+                for (int i = 0; i <= nodeList.Count - 1; i++)
+                {
+                    if (inXmlNode.ChildNodes[i].Name == "outline")
+                    {
+                        XmlNode xNode = inXmlNode.ChildNodes[i];
+                        AddNode(newNode.Nodes, xNode);
+
+                    }
+                    else continue;
+                    
+                }
+            }
+            else
+            {
+                // If the node has an attribute "name", use that.  Otherwise display the entire text of the node.
+                string text = GetAttributeText(inXmlNode, "text");
+                if (string.IsNullOrEmpty(text))
+                    text = (inXmlNode.OuterXml).Trim();
+                TreeNode newNode = nodes.Add(text);
             }
         }
     }

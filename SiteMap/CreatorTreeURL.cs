@@ -15,7 +15,7 @@ namespace SiteMap
         private string main;
 
 
-        public  void AddToTree(string url)
+        private void AddToTree(string url)
         {
             string[] splited = url.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -76,6 +76,7 @@ namespace SiteMap
             //tree.Branches[1].AddBranch("eurabota.ua/job2/1");
             //tree.Branches[1].AddBranch("eurabota.ua/job2/2");
         }
+
 
         //public string ToOPML()
         //{
