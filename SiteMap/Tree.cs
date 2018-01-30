@@ -36,7 +36,7 @@ namespace SiteMap
         /// Возвращает данный екземпляр в формате OPML
         /// </summary>
         /// <returns></returns>
-        public string ToOPML()
+        private string ToOPML()
         {
             
                 StringBuilder output = new StringBuilder();

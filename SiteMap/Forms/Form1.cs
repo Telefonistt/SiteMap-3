@@ -53,7 +53,7 @@ namespace SiteMap
         public string Main()
         {
             UpdateTree(0);
-            string content = strClass.CreateOPML(treeCreator.TreeURL.ToOPML());
+            string content = strClass.CreateOPML(treeCreator.TreeURL.ToOPMLWithoutMain());
             return content;
         }
 
@@ -227,6 +227,7 @@ namespace SiteMap
                 string path= openFileDialog1.FileName;
                 //OpmlReader.Load(openFileDialog1.FileName);
                 //textBox1.Text = OpmlReader.Source;
+                textBox1.Text = "";
                 XmlDocument doc = new XmlDocument();
                 doc.Load(path);
                 LoadTreeFromXmlDocument(doc);
@@ -281,7 +282,7 @@ namespace SiteMap
                     
                 }
 
-                treeView1.ExpandAll();
+                //treeView1.ExpandAll();
             }
             catch (Exception ex)
             {
@@ -324,6 +325,28 @@ namespace SiteMap
                     text = (inXmlNode.OuterXml).Trim();
                 TreeNode newNode = nodes.Add(text);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+            string head = comboBox3.Text + treeView1.Nodes[0].Text;
+            textBox1.Text += head+"\r\n";
+            CreateListUrls(head,treeView1.Nodes[0]);
+
+        }
+
+        private void CreateListUrls(string head,TreeNode treeNode)
+        {
+            
+            for(int i=0;i<treeNode.Nodes.Count;i++)
+            {
+                string tempHead = head + '/' + treeNode.Nodes[i].Text;
+                textBox1.Text += tempHead + "\r\n";
+                CreateListUrls(tempHead, treeNode.Nodes[i]);
+            }
+            //treeView1.Nodes[0];
+
         }
     }
 }
